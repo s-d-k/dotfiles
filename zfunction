@@ -1,0 +1,22 @@
+updateall()
+{
+    # update homebrew
+    brew update && brew upgrade
+    # update vundle
+    vim +PluginUpdate +qall
+    # update antigen
+    antigen selfupdate && antigen update
+}
+
+ssh_cmd()
+{
+    # preserve working directory when ssh'ing 
+    local host=$1
+    shift
+    local dir=$(pwd)
+    # correct for /Users on OS X
+    dir=$(echo "$dir" | sed -e 's|/Users/|/home/|')
+    # correct for hgfs mount point
+#   dir=$(echo "$dir" | sed -e 's|/Volumes/|/mnt/hgfs/|')
+    ssh -t -q $host "cd $dir;$@"
+}

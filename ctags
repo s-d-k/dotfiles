@@ -1,0 +1,4 @@
+--tag-relative=yes
+--PHP-kinds=cfiv
+--languages=-HTML
+--languages=-JavaScript

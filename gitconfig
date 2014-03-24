@@ -1,0 +1,17 @@
+[user]
+	name = Shane King
+	email = sking@arubanetworks.com
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+[core]
+	excludesfile = ~/.gitignore
+	commentchar = |
+[push]
+	default = simple
+[init]
+	templatedir = /Users/sking/.gittemplate
+[alias]
+	ctags = !.git/hooks/ctags
