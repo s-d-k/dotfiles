@@ -160,10 +160,11 @@ set textwidth=0 " 80-character lines maximum
 set formatoptions=tcrqn21
 
 " Automatically restore cursor position when possible
+" Don't do this for git commit messages
 augroup DoRestore
 	autocmd!
 	autocmd BufReadPost *
-	\ if line("'\"") > 1 && line("'\"") <= line("$") |
+	\ if &ft != 'gitcommit' && line("'\"") > 1 && line("'\"") <= line("$") |
 	\	exe "normal! g`\"" |
 	\ endif
 augroup END
