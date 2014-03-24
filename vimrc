@@ -68,7 +68,6 @@ if iCanHazVundle == 0
     :PluginInstall
 endif
 
-
 """
 """ Functions
 """
@@ -106,6 +105,7 @@ set autoread " automatically reload a file if it's changed outside vim
 set visualbell " beeping sucks
 set kp=":help" " use internal help
 set spelllang=en_au " oi oi oi
+set mouse=a " allow for scrolling
 
 " temp files
 set noswapfile " dont use swap files
@@ -187,6 +187,7 @@ set diffopt=iwhite " ignore whitespace changes
 """ Enable solarized theme
 set background=light
 let g:solarized_termcolors=256
+let g:solarized_contrast = 'high'
 colorscheme solarized
 set guifont=Monaco:h11
 set guioptions=c " use console style dialogs 
@@ -231,6 +232,19 @@ autocmd BufReadPost .htPluginInfo.php setlocal expandtab
 autocmd filetype json setlocal conceallevel=0
 " remove trailing crapola
 autocmd FileType c,cpp,java,php,ruby,python,javascript,shell autocmd BufWritePre <buffer> :call StripTrailing()
+
+" setup python to run tests
+autocmd FileType python setlocal makeprg=nosetests
+autocmd FileType python setlocal errorformat=
+    \%A\ \ File\ \"%f\"\\\,\ line\ %l\\\,%m,
+    \%C\ \ \ \ %.%#,
+    \%+Z%.%#Error\:\ %.%#,
+    \%A\ \ File\ \"%f\"\\\,\ line\ %l,
+    \%+C\ \ %.%#,
+    \%-C%p^,
+    \%Z%m,
+    \%-G%.%#
+
 
 """
 """ Plugin settings
@@ -309,10 +323,6 @@ nnoremap <Leader>q :q<CR>
 
 " Undo
 nnoremap <Leader>u :GundoToggle
-
-" BS/Enter to go to start/end of file
-nnoremap <BS> gg
-nnoremap <Enter> G
 
 " TODO: mappings for tests
 
