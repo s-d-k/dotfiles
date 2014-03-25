@@ -30,7 +30,7 @@ Plugin 'tpope/vim-dispatch' " run shell commands in background
 Plugin 'tpope/vim-vinegar' " netrw enhancements
 Plugin 'benmills/vimux' " tmux integration
 Plugin 'rking/ag.vim' " support for the_silver_seracher
-Plugin 'christoomey/vim-tmux-navigator' " vim/tmux window integration
+" Plugin 'christoomey/vim-tmux-navigator' " vim/tmux window integration
 
 """ visuals
 Plugin 'altercation/vim-colors-solarized' " color theme
@@ -54,7 +54,8 @@ Plugin 'tpope/vim-git' " git syntax etc
 """ python
 Plugin 'hynek/vim-python-pep8-indent' " indent python by the rules
 Plugin 'julienr/vimux-pyutils' " run python blocks
-Plugin 'pitluga/vimux-nose-test' " run python tests
+" Plugin 'pitluga/vimux-nose-test' " run python tests
+Plugin 's-d-k/python.vim--Herzog' " python compiler
 
 """ IDE features
 Plugin 'scrooloose/syntastic' " syntax checking
@@ -239,16 +240,16 @@ autocmd FileType c,cpp,java,php,ruby,python,javascript,shell autocmd BufWritePre
 autocmd FileType gitcommit setlocal spell
 
 " setup python to run tests
-autocmd FileType python setlocal makeprg=nosetests
-autocmd FileType python setlocal errorformat=
-    \%A\ \ File\ \"%f\"\\\,\ line\ %l\\\,%m,
-    \%C\ \ \ \ %.%#,
-    \%+Z%.%#Error\:\ %.%#,
-    \%A\ \ File\ \"%f\"\\\,\ line\ %l,
-    \%+C\ \ %.%#,
-    \%-C%p^,
-    \%Z%m,
-    \%-G%.%#
+autocmd FileType python setlocal makeprg=python\ -m\ unittest\ discover
+" autocmd FileType python setlocal errorformat=
+"     \%A\ \ File\ \"%f\"\\\,\ line\ %l\\\,%m,
+"     \%C\ \ \ \ %.%#,
+"     \%+Z%.%#Error\:\ %.%#,
+"     \%A\ \ File\ \"%f\"\\\,\ line\ %l,
+"     \%+C\ \ %.%#,
+"     \%-C%p^,
+"     \%Z%m,
+"     \%-G%.%#
 
 
 """

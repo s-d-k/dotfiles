@@ -13,6 +13,10 @@ typeset -gU cdpath fpath mailpath path
 
 # /usr/local at front of path
 path=( /usr/local/{bin,sbin} $path )
+if [ ! -z "$VIRTUAL_ENV" ] ; then
+    # add virtual env to front of path when active
+    path=( "$VIRTUAL_ENV/bin" $path )
+fi
 
 export LESS='-R -F -X -n'
 

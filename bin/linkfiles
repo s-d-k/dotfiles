@@ -6,5 +6,6 @@ filedir=$(cd `dirname $0` && cd .. && pwd -P)
 
 for file in $filedir/[a-z]*; do
     dotfile="$HOME/.$(basename $file)"
+    rm -f "$dotfile"
     ln -sf "${file#$HOME/}" "$dotfile"
 done

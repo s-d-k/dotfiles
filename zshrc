@@ -20,6 +20,7 @@ antigen bundle python
 # Shell management
 antigen bundle autojump
 antigen bundle tmux
+antigen bundle tmuxinator
 
 # package management
 antigen bundle brew
@@ -40,6 +41,9 @@ antigen apply
 
 # extra completions
 fpath=(~/.antigen/repos/https-COLON--SLASH--SLASH-github.com-SLASH-zsh-users-SLASH-zsh-completions.git/src $fpath)
+
+# gem path
+path=(/usr/local/opt/ruby/bin $path)
 
 # include smartcd
 source ~/.antigen/repos/https-COLON--SLASH--SLASH-github.com-SLASH-cxreg-SLASH-smartcd.git/lib/core/smartcd
