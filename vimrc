@@ -30,7 +30,6 @@ Plugin 'tpope/vim-dispatch' " run shell commands in background
 Plugin 'tpope/vim-vinegar' " netrw enhancements
 Plugin 'benmills/vimux' " tmux integration
 Plugin 'rking/ag.vim' " support for the_silver_seracher
-" Plugin 'christoomey/vim-tmux-navigator' " vim/tmux window integration
 
 """ visuals
 Plugin 'altercation/vim-colors-solarized' " color theme
@@ -44,6 +43,7 @@ Plugin 'vim-scripts/Gundo' " undo tree visualizer
 Plugin 'tpope/vim-repeat' " adds . repeat support for plugins
 Plugin 'terryma/vim-expand-region' " progressively expand selected region
 Plugin 'tpope/vim-unimpaired' " Pairs of operations
+Plugin 'milkypostman/vim-togglelist' " toggle the quick fix window
 
 """ git support
 Plugin 'mhinz/vim-signify' " VCS status in the gutter
@@ -54,7 +54,6 @@ Plugin 'tpope/vim-git' " git syntax etc
 """ python
 Plugin 'hynek/vim-python-pep8-indent' " indent python by the rules
 Plugin 'julienr/vimux-pyutils' " run python blocks
-" Plugin 'pitluga/vimux-nose-test' " run python tests
 Plugin 's-d-k/python.vim--Herzog' " python compiler
 
 """ IDE features
@@ -89,6 +88,13 @@ endfunction
 
 function! StripTrailing()
 	call Preserve("%s/\\s\\+$//e")
+endfunction
+
+function! ChangeToPythonRoot()
+    lcd %:p:h
+    while filereadable('__init__.py')
+        lcd ..
+    endwhile
 endfunction
 
 """
@@ -241,16 +247,8 @@ autocmd FileType gitcommit setlocal spell
 
 " setup python to run tests
 autocmd FileType python setlocal makeprg=python\ -m\ unittest\ discover
-" autocmd FileType python setlocal errorformat=
-"     \%A\ \ File\ \"%f\"\\\,\ line\ %l\\\,%m,
-"     \%C\ \ \ \ %.%#,
-"     \%+Z%.%#Error\:\ %.%#,
-"     \%A\ \ File\ \"%f\"\\\,\ line\ %l,
-"     \%+C\ \ %.%#,
-"     \%-C%p^,
-"     \%Z%m,
-"     \%-G%.%#
-
+autocmd FileType python let b:dispatch = 'python -m unittest %'
+autocmd FileType python call ChangeToPythonRoot()
 
 """
 """ Plugin settings
@@ -280,6 +278,9 @@ let g:ctrlp_working_path_mode = 'ra' " try to find project root
 
 """ Vimux
 let g:VimuxUseNearest = 0 " don't just pick the nearest, create
+
+""" togglelist
+let g:toggle_list_no_mappings = 1
 
 """
 """ Keybindings
@@ -331,11 +332,14 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
 
 " Undo
-nnoremap <Leader>u :GundoToggle
+nnoremap <silent> <Leader>u :GundoToggle
 
-" TODO: mappings for tests
 " run make
-nnoremap <Leader>m :Make<CR>
+nnoremap <silent> <Leader>m :Make<CR>
+nnoremap <silent> <Leader>d :Dispatch<CR>
+
+" toggle quickfix window
+nnoremap <silent> <Leader>z :call ToggleQuickfixList()<CR>
 
 """ vp doesn't replace paste buffer
 function! RestoreRegister()
