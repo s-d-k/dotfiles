@@ -4,3 +4,5 @@ alias resource="source ~/.zshrc"
 for host in `grep "172.16.149.1\S" /etc/hosts | cut -d ' ' -f 2` ; do
     alias $host="ssh_cmd $host"
 done
+
+alias findgit="find . -name .git -type dir -exec dirname {} \;"

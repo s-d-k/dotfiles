@@ -17,6 +17,28 @@ ssh_cmd()
     # correct for /Users on OS X
     dir=$(echo "$dir" | sed -e 's|/Users/|/home/|')
     # correct for hgfs mount point
-#   dir=$(echo "$dir" | sed -e 's|/Volumes/|/mnt/hgfs/|')
+    dir=$(echo "$dir" | sed -e 's|/Volumes/|/mnt/hgfs/|')
     ssh -t -q $host "cd $dir;$@"
+}
+
+git_fetch_all()
+{
+    if [ ! -z "$1" ] ; then
+        if ! pushd "$1" > /dev/null ; then
+            return
+       fi
+    fi
+    for gitdir in `findgit` ; do
+        pushd "$gitdir" > /dev/null
+        echo "» Fetching \`$gitdir'"
+        if [ -f .git/svn/.metadata ] ; then
+            git svn fetch
+        else
+            git fetch
+        fi
+        popd > /dev/null
+    done
+    if [ ! -z "$1" ] ; then
+        popd "$1" > /dev/null
+    fi
 }

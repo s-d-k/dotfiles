@@ -53,6 +53,8 @@ Plugin 'tpope/vim-git' " git syntax etc
 
 """ python
 Plugin 'hynek/vim-python-pep8-indent' " indent python by the rules
+Plugin 'julienr/vimux-pyutils' " run python blocks
+Plugin 'pitluga/vimux-nose-test' " run python tests
 
 """ IDE features
 Plugin 'scrooloose/syntastic' " syntax checking
@@ -233,6 +235,9 @@ autocmd filetype json setlocal conceallevel=0
 " remove trailing crapola
 autocmd FileType c,cpp,java,php,ruby,python,javascript,shell autocmd BufWritePre <buffer> :call StripTrailing()
 
+" spellcheck git commit messages
+autocmd FileType gitcommit setlocal spell
+
 " setup python to run tests
 autocmd FileType python setlocal makeprg=nosetests
 autocmd FileType python setlocal errorformat=
@@ -272,6 +277,9 @@ let g:syntastic_python_checkers = ['flake8']
 let g:ctrlp_map = '' " don't takeover the default <c-p>
 let g:ctrlp_working_path_mode = 'ra' " try to find project root
 
+""" Vimux
+let g:VimuxUseNearest = 0 " don't just pick the nearest, create
+
 """
 """ Keybindings
 """
@@ -305,7 +313,7 @@ vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
 " open recently edited
-nnoremap <Leader>m :CtrlPMRU<CR>
+nnoremap <Leader>r :CtrlPMRU<CR>
 " open buffers
 nnoremap <Leader>b :CtrlPBuffer<CR>
 " open files
@@ -325,6 +333,8 @@ nnoremap <Leader>q :q<CR>
 nnoremap <Leader>u :GundoToggle
 
 " TODO: mappings for tests
+" run make
+nnoremap <Leader>m :Make<CR>
 
 """ vp doesn't replace paste buffer
 function! RestoreRegister()
